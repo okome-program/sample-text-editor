@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Safari対応テキストエディタ</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    textarea { width: 100%; height: 70vh; font-size: 16px; }
+    button { margin-right: 10px; padding: 10px 20px; }
+  </style>
+</head>
+<body>
 
+  <h2>Safari対応テキストエディタ</h2>
+
+  <input type="file" id="fileInput" accept=".txt">
+  <button onclick="saveFile()">保存</button>
+
+  <textarea id="editor"></textarea>
+
+  <script>
+    let currentFileName = "memo.txt";
+
+    // ファイル読み込み
+    document.getElementById("fileInput").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      currentFileName = file.name;
+
+      const reader = new FileReader();
+      reader.onload = function() {
+        document.getElementById("editor").value = reader.result;
+      };
+      reader.readAsText(file);
+    });
+
+    // Safari対応のダウンロード保存
+    function saveFile() {
+      const text = document.getElementById("editor").value;
+      const blob = new Blob([text], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = currentFileName; // Safariは毎回新規保存
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>
