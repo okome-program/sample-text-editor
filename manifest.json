@@ -1,0 +1,13 @@
+{
+  "name": "sample-texte-ditor",
+  "short_name": "text-editor",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
